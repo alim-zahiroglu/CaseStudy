@@ -1,4 +1,4 @@
-package com.uydev.casestudy;
+package com.uydev;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,7 @@ public class CaseStudyApplication {
     public static void main(String[] args) {
         SpringApplication.run(CaseStudyApplication.class, args);
     }
+
+
 
 }

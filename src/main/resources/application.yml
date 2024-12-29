@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: etlasBackend
+
+  # database configuration
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/case_study
+    username: postgres
+    password: admin
+
+  # Jpa configuration
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+
+  # sql configuration
+  sql:
+    init:
+      mode: always
+
+  # security configuration
+#  security:
+#    oauth2:
+#      resourceserver:
+#        # with jwt token
+#        jwt:
+#          issuer-uri: http://localhost:8080/realms/uydev
+
+
+# swagger-ui configuration
+#springdoc:
+#  swagger-ui:
+#    path: /show-swagger
+#    oauth:
+#      client-id: uydev-ecommerce
+#      client-secret: 8wt4awORv4dJFKDrRuxAKr5b6t68nJrL
+
+
+# keycloak properties
+#keycloak:
+#  realm_name: uydev
+#  server-url: http://localhost:8080
+#  client-id: admin-cli
+#  grant-type: password
+#  username: ziya
+#  password: Abc1
+#  application_clientId: uydev-ecommerce
+
+server:
+  port: 8081
