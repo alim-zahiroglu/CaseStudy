@@ -24,33 +24,5 @@ spring:
     init:
       mode: always
 
-  # security configuration
-#  security:
-#    oauth2:
-#      resourceserver:
-#        # with jwt token
-#        jwt:
-#          issuer-uri: http://localhost:8080/realms/uydev
-
-
-# swagger-ui configuration
-#springdoc:
-#  swagger-ui:
-#    path: /show-swagger
-#    oauth:
-#      client-id: uydev-ecommerce
-#      client-secret: 8wt4awORv4dJFKDrRuxAKr5b6t68nJrL
-
-
-# keycloak properties
-#keycloak:
-#  realm_name: uydev
-#  server-url: http://localhost:8080
-#  client-id: admin-cli
-#  grant-type: password
-#  username: ziya
-#  password: Abc1
-#  application_clientId: uydev-ecommerce
-
 server:
-  port: 8081
+  port: 8080
