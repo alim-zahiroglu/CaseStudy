@@ -17,7 +17,7 @@ public class Model  extends BaseEntity {
 
     private String name;
 
-    private boolean isActive = true; // Only active models are included in calculations
+    private boolean isActive;
 
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = false)
