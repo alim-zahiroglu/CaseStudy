@@ -28,10 +28,16 @@ VALUES
 -- Base Data for Monthly Targets (Production Goals)
 INSERT INTO monthly_target (month, target, project_id, insert_date_time, insert_user_id, last_update_date_time, last_update_user_id, is_deleted)
 VALUES
-    ( 'DECEMBER', 3500, 1, NOW(), 1, NOW(), 1, false),
-    ('JANUARY', 5000, 1, NOW(), 1, NOW(), 1, false),
-    ('FEBRUARY', 7000, 1, NOW(), 1, NOW(), 1, false),
-    ( 'MARCH', 6000, 2, NOW(), 1, NOW(), 1, false),
-    ( 'APRIL', 8000, 2, NOW(), 1, NOW(), 1, false),
-    ('MAY', 5500, 3, NOW(), 1, NOW(), 1, false),
-    ('JUNE', 7500, 3, NOW(), 1, NOW(), 1, false);
+    ( 'DECEMBER', 1000, 1, NOW(), 1, NOW(), 1, false),
+    ('JANUARY', 2000, 1, NOW(), 1, NOW(), 1, false),
+    ('FEBRUARY', 1500, 1, NOW(), 1, NOW(), 1, false),
+
+    ( 'DECEMBER', 3500, 2, NOW(), 1, NOW(), 1, false),
+    ( 'JANUARY', 6000, 2, NOW(), 1, NOW(), 1, false),
+    ( 'FEBRUARY', 7500, 2, NOW(), 1, NOW(), 1, false),
+    ( 'MARCH', 8000, 2, NOW(), 1, NOW(), 1, false),
+
+--     ( 'DECEMBER', 3500, 3, NOW(), 1, NOW(), 1, false),
+    ( 'JANUARY', 4500, 3, NOW(), 1, NOW(), 1, false),
+    ( 'FEBRUARY', 6000, 3, NOW(), 1, NOW(), 1, false),
+    ( 'MARCH', 8000, 3, NOW(), 1, NOW(), 1, false);

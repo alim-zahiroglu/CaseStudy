@@ -18,4 +18,7 @@ public interface ProjectController {
     @PutMapping("/update/{projectId}")
     ResponseWrapper<ProjectDto> updateProject(@Valid @RequestBody ProjectDto newProject, @PathVariable Long projectId);
 
+    @DeleteMapping("/delete/{projectId}")
+    ResponseWrapper<ProjectDto> deleteProject(@PathVariable Long projectId);
+
 }

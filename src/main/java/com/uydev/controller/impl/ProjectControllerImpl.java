@@ -27,4 +27,9 @@ public class ProjectControllerImpl extends BaseResponseOk implements ProjectCont
     public ResponseWrapper<ProjectDto> updateProject(ProjectDto newProject, Long projectId) {
         return ok(projectService.update(newProject, projectId));
     }
+
+    @Override
+    public ResponseWrapper<ProjectDto> deleteProject(Long projectId) {
+        return ok(projectService.deleteProject(projectId), "Project is deleted successfully");
+    }
 }

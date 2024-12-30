@@ -3,6 +3,7 @@ package com.uydev.service.impl;
 import com.uydev.dto.MonthlyTargetDto;
 import com.uydev.entity.MonthlyTarget;
 import com.uydev.enums.Month;
+import com.uydev.exception.MonthlyTargetNotFoundException;
 import com.uydev.mapper.MapperUtil;
 import com.uydev.repository.MonthlyTargetRepository;
 import com.uydev.service.MonthlyTargetService;
@@ -21,10 +22,11 @@ public class MonthlyTargetServiceImpl implements MonthlyTargetService {
     public MonthlyTargetDto getCurrentMonthlyTargetByProjectId(Long projectId) {
         Month currentMonth = Month.valueOf(LocalDate.now().getMonth().name());
         MonthlyTarget currentMonthTarget = repository.getMonthlyTargetByProjectIdAndMonth(projectId,currentMonth);
-        if (currentMonthTarget !=null){
-           return mapper.convert(currentMonthTarget, new MonthlyTargetDto());
+        if (currentMonthTarget ==null){
+          return null;
         }
-        return null;
+        return mapper.convert(currentMonthTarget, new MonthlyTargetDto());
+
     }
 
     @Override

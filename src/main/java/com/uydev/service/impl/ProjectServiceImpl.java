@@ -12,7 +12,6 @@ import com.uydev.mapper.MapperUtil;
 import com.uydev.repository.ProjectRepository;
 import com.uydev.service.MonthlyTargetService;
 import com.uydev.service.ProjectService;
-import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -60,14 +59,6 @@ public class ProjectServiceImpl implements ProjectService {
         return response;
     }
 
-    private void createCurrentMothTarget(Project savedProject, int target){
-        MonthlyTarget monthlyTarget = new MonthlyTarget();
-        monthlyTarget.setProject(savedProject);
-        monthlyTarget.setMonth(Month.valueOf(LocalDate.now().getMonth().name()));
-        monthlyTarget.setTarget(target);
-        monthlyTargetService.save(monthlyTarget);
-    }
-
     @Override
     public ProjectDto update(ProjectDto newProject, Long projectId) {
         Project oldProject = findById(projectId);
@@ -85,13 +76,34 @@ public class ProjectServiceImpl implements ProjectService {
         return response;
     }
 
+    @Override
+    public ProjectDto deleteProject(Long projectId) {
+        Project project = findById(projectId);
+        project.setIsDeleted(true);
+        Project deletedProject = repository.save(project);
+        ProjectDto response = mapper.convert(deletedProject,new ProjectDto());
+        MonthlyTargetDto currentMonthTarget = monthlyTargetService.getCurrentMonthlyTargetByProjectId(projectId);
+        if (currentMonthTarget != null){
+            response.setTarget(currentMonthTarget.getTarget());
+            return response;
+        }
+        return response;
+    }
+
+    private void createCurrentMothTarget(Project savedProject, int target){
+        MonthlyTarget monthlyTarget = new MonthlyTarget();
+        monthlyTarget.setProject(savedProject);
+        monthlyTarget.setMonth(Month.valueOf(LocalDate.now().getMonth().name()));
+        monthlyTarget.setTarget(target);
+        monthlyTargetService.save(monthlyTarget);
+    }
+
     private void updateCurrentMothTarget(Project savedProject, int newTarget) {
     MonthlyTargetDto currentTarget = monthlyTargetService.getCurrentMonthlyTargetByProjectId(savedProject.getId());
     currentTarget.setTarget(newTarget);
     monthlyTargetService.save(mapper.convert(currentTarget,new MonthlyTarget()));
 
     }
-
 
     private Project findById(Long projectId){
         Project project =  repository.findByIdAndIsDeleted(projectId,false);
