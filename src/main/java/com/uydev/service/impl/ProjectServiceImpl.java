@@ -7,11 +7,12 @@ import com.uydev.entity.Project;
 import com.uydev.enums.ConfigType;
 import com.uydev.enums.Month;
 import com.uydev.exception.DuplicateKeyException;
-import com.uydev.exception.UserNotFoundException;
+import com.uydev.exception.ProjectNotFoundException;
 import com.uydev.mapper.MapperUtil;
 import com.uydev.repository.ProjectRepository;
 import com.uydev.service.MonthlyTargetService;
 import com.uydev.service.ProjectService;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -52,13 +53,56 @@ public class ProjectServiceImpl implements ProjectService {
         Project savedProject = repository.save(project);
 
         // create current month target
+        createCurrentMothTarget(savedProject, newProject.getTarget());
+
+        ProjectDto response =  mapper.convert(savedProject, new ProjectDto());
+        response.setTarget(newProject.getTarget());
+        return response;
+    }
+
+    private void createCurrentMothTarget(Project savedProject, int target){
         MonthlyTarget monthlyTarget = new MonthlyTarget();
         monthlyTarget.setProject(savedProject);
         monthlyTarget.setMonth(Month.valueOf(LocalDate.now().getMonth().name()));
-        monthlyTarget.setTarget(newProject.getTarget());
+        monthlyTarget.setTarget(target);
         monthlyTargetService.save(monthlyTarget);
+    }
 
-        return mapper.convert(savedProject, new ProjectDto());
+    @Override
+    public ProjectDto update(ProjectDto newProject, Long projectId) {
+        Project oldProject = findById(projectId);
+        Project updatedProject = mapper.convert(newProject, new Project());
+        // update config type
+        updatedProject.setConfigType(ConfigType.valueOf(newProject.getConfigType().toUpperCase()));
+        updatedProject.setId(oldProject.getId());
+        Project savedProject = repository.save(updatedProject);
+
+        // update current month target
+        updateCurrentMothTarget(savedProject, newProject.getTarget());
+
+        ProjectDto response =  mapper.convert(savedProject, new ProjectDto());
+        response.setTarget(newProject.getTarget());
+        return response;
+    }
+
+    private void updateCurrentMothTarget(Project savedProject, int newTarget) {
+    MonthlyTargetDto currentTarget = monthlyTargetService.getCurrentMonthlyTargetByProjectId(savedProject.getId());
+    currentTarget.setTarget(newTarget);
+    monthlyTargetService.save(mapper.convert(currentTarget,new MonthlyTarget()));
+
+    }
+
+
+    private Project findById(Long projectId){
+        Project project =  repository.findByIdAndIsDeleted(projectId,false);
+        if (project == null){
+            throw new ProjectNotFoundException(projectId);
+        }
+        return project;
+    }
+
+    private ProjectDto getProjectById(Long projectId){
+        return mapper.convert(findById(projectId), new ProjectDto());
     }
 
 }

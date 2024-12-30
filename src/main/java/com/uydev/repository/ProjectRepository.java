@@ -12,4 +12,6 @@ public interface ProjectRepository extends JpaRepository<Project,Long> {
     List<Project> findAllByIsDeleted(boolean isDeleted);
 
     boolean existsByNameAndIsDeleted(String name, boolean isDeleted);
+
+    Project findByIdAndIsDeleted(Long projectId, boolean isDeleted);
 }

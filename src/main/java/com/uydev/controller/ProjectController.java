@@ -3,10 +3,7 @@ package com.uydev.controller;
 import com.uydev.dto.ProjectDto;
 import com.uydev.dto.ResponseWrapper;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,5 +14,8 @@ public interface ProjectController {
 
     @PostMapping("/create")
     ResponseWrapper<ProjectDto> createProject(@Valid @RequestBody ProjectDto newProject);
+
+    @PutMapping("/update/{projectId}")
+    ResponseWrapper<ProjectDto> updateProject(@Valid @RequestBody ProjectDto newProject, @PathVariable Long projectId);
 
 }

@@ -51,4 +51,10 @@ public class GlobalExceptionHandler extends BaseResponseError {
     public ResponseWrapper<Null> handleDuplicateKeyException(DuplicateKeyException ex){
         return error(null,ex.getMessage());
     }
+
+    @ExceptionHandler(value = ProjectNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseWrapper<Null> handleProjectNotFoundException(ProjectNotFoundException ex){
+        return error(null,ex.getMessage());
+    }
 }

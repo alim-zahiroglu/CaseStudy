@@ -22,4 +22,9 @@ public class ProjectControllerImpl extends BaseResponseOk implements ProjectCont
     public ResponseWrapper<ProjectDto> createProject(ProjectDto newProject) {
         return ok(projectService.createProject(newProject),"Project is created successfully");
     }
+
+    @Override
+    public ResponseWrapper<ProjectDto> updateProject(ProjectDto newProject, Long projectId) {
+        return ok(projectService.update(newProject, projectId));
+    }
 }

@@ -22,7 +22,6 @@ public class Project extends BaseEntity{
     private String name;
 
     @Enumerated(EnumType.STRING)
-
     private ConfigType configType;
 
     @OneToMany(mappedBy = "project")

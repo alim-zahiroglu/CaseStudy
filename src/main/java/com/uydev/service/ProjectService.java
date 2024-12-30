@@ -8,4 +8,6 @@ public interface ProjectService {
     List<ProjectDto> findAllProjects();
 
     ProjectDto createProject(ProjectDto newProject);
+
+    ProjectDto update(ProjectDto newProject, Long projectId);
 }
