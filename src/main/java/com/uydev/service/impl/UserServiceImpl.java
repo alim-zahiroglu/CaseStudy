@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements com.uydev.service.UserService {
+public class UserServiceImpl implements com.uydev.service.UserService {
     private final UserRepository repository;
     private final MapperUtil mapper;
 
