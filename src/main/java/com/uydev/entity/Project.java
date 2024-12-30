@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,12 +19,11 @@ import lombok.Setter;
 public class Project extends BaseEntity{
 
     private String name;
-    private int monthlyTarget;
-
     @Enumerated(EnumType.STRING)
     private ConfigType configType;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "configuration_id", referencedColumnName = "id")
-    private Configuration configuration;
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MonthlyTarget> monthlyTargets = new ArrayList<>();
+
+
 }
