@@ -8,7 +8,6 @@ import com.uydev.mapper.MapperUtil;
 import com.uydev.repository.MonthlyTargetRepository;
 import com.uydev.service.MonthlyTargetService;
 import com.uydev.service.ProjectService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 

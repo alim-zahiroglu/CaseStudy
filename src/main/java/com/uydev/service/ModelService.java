@@ -12,4 +12,6 @@ public interface ModelService {
     Integer findAvailablePercentage(Long projectId);
 
     List<ModelDto> findAllModelsByProjectId(Long projectId);
+
+    void deleteModelByProjectId(Long projectId);
 }

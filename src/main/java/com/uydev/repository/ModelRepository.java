@@ -25,4 +25,9 @@ public interface ModelRepository extends JpaRepository<Model,Long> {
             "AND m.isDeleted = :isDeleted")
     boolean existsByNameAndIsDeleted(String modelName, boolean isDeleted);
 
+    @Query("SELECT m FROM Model m " +
+            "JOIN m.project p " +
+            "WHERE p.id = :projectId " +
+            "AND m.isDeleted = :isDeleted")
+    List<Model> findAllByProjectIdAndModelIsDeleted(Long projectId, boolean isDeleted);
 }

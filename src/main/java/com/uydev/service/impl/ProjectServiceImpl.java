@@ -10,6 +10,7 @@ import com.uydev.exception.DuplicateKeyException;
 import com.uydev.exception.ProjectNotFoundException;
 import com.uydev.mapper.MapperUtil;
 import com.uydev.repository.ProjectRepository;
+import com.uydev.service.ModelService;
 import com.uydev.service.MonthlyTargetService;
 import com.uydev.service.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
     private final MonthlyTargetService monthlyTargetService;
+    private final ModelService modelService;
     private final ProjectRepository repository;
     private final MapperUtil mapper;
     @Override
@@ -81,6 +83,10 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = findById(projectId);
         project.setIsDeleted(true);
         Project deletedProject = repository.save(project);
+
+        // delete models belongs to project
+        modelService.deleteModelByProjectId(projectId);
+
         ProjectDto response = mapper.convert(deletedProject,new ProjectDto());
         MonthlyTargetDto currentMonthTarget = monthlyTargetService.getCurrentMonthlyTargetByProjectId(projectId);
         if (currentMonthTarget != null){

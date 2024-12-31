@@ -12,17 +12,26 @@ import com.uydev.service.ModelService;
 import com.uydev.service.MonthlyTargetService;
 import com.uydev.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
 public class ModelServiceImpl implements ModelService {
     private final ModelRepository repository;
     private final ProjectService projectService;
     private final MonthlyTargetService monthlyTargetService;
     private final MapperUtil mapper;
+
+    public ModelServiceImpl(ModelRepository repository, @Lazy ProjectService projectService, MonthlyTargetService monthlyTargetService, MapperUtil mapper) {
+        this.repository = repository;
+        this.projectService = projectService;
+        this.monthlyTargetService = monthlyTargetService;
+        this.mapper = mapper;
+    }
+
     @Override
     public List<ModelDto> findAllModels() {
         List<Model> models = repository.findAllByIsDeleted(false);
@@ -39,7 +48,7 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public List<ModelDto> findAllModelsByProjectId(Long projectId) {
         return findAllModels().stream()
-                .filter(model-> model.getProjectId() == projectId)
+                .filter(model-> Objects.equals(model.getProjectId(), projectId))
                 .toList();
     }
 
@@ -65,6 +74,15 @@ public class ModelServiceImpl implements ModelService {
 
         throw new ValueNotAcceptableException("CurrentPercentage",newModel.getCurrentPercentage(),"It should not grater then: " + availability);
 
+    }
+
+    @Override
+    public void deleteModelByProjectId(Long projectId) {
+        List<Model> models = repository.findAllByProjectIdAndModelIsDeleted(projectId,false);
+        models.forEach(model -> {
+            model.setIsDeleted(true);
+            repository.save(model);
+        });
     }
 
     @Override
