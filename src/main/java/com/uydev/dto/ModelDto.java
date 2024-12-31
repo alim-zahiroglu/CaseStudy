@@ -22,16 +22,20 @@ public class ModelDto {
     private Long id;
 
     @NotBlank(message = "Name should not be blank")
-    @Size(min = 2, max = 50, message = "userName must be 2~50 character long")
+    @Size(min = 2, max = 50, message = "Name must be 2~50 character long")
     private String name;
+
 
     private boolean isActive = true;
 
+    private Integer currentPercentage;
     private Integer fixedPercentage;
     private Integer monthlyPercentage;
     private Integer weeklyPercentage;
 
     @NumberFormat
-    @Min(value = 1, message = "Target must be greater than or equal to 1")
+    @Min(value = 1, message = "Project Id should be positive integer number")
     private Long projectId;
+
+    private String projectName;
 }

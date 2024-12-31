@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,6 +62,12 @@ public class GlobalExceptionHandler extends BaseResponseError {
     @ExceptionHandler(value = MonthlyTargetNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseWrapper<Null> handleMonthlyTargetNotFoundException(MonthlyTargetNotFoundException ex){
+        return error(null,ex.getMessage());
+    }
+
+    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseWrapper<Null> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex){
         return error(null,ex.getMessage());
     }
 }
