@@ -10,4 +10,6 @@ public interface ModelService {
     ModelDto addModel(ModelDto newModel, Long projectId);
 
     Integer findAvailablePercentage(Long projectId);
+
+    List<ModelDto> findAllModelsByProjectId(Long projectId);
 }

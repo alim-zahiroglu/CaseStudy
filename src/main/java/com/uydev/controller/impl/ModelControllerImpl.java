@@ -20,6 +20,11 @@ public class ModelControllerImpl extends BaseResponseOk implements ModelControll
     }
 
     @Override
+    public ResponseWrapper<List<ModelDto>> listModelByProjectId(Long projectId) {
+        return ok(modelService.findAllModelsByProjectId(projectId), "All models are retrieved for project id: "+ projectId);
+    }
+
+    @Override
     public ResponseWrapper<ModelDto> addModel(ModelDto newModel, Long projectId) {
         return ok(modelService.addModel(newModel,projectId));
     }

@@ -12,6 +12,9 @@ public interface ModelController {
     @GetMapping("/list")
     ResponseWrapper<List<ModelDto>> findAllModels();
 
+    @GetMapping("/list/{projectId}")
+    ResponseWrapper<List<ModelDto>> listModelByProjectId(@PathVariable Long projectId);
+
     @PostMapping("/add")
     ResponseWrapper<ModelDto> addModel(@Valid @RequestBody ModelDto newModel, @RequestParam Long projectId);
 }

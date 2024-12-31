@@ -37,6 +37,13 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
+    public List<ModelDto> findAllModelsByProjectId(Long projectId) {
+        return findAllModels().stream()
+                .filter(model-> model.getProjectId() == projectId)
+                .toList();
+    }
+
+    @Override
     public ModelDto addModel(ModelDto newModel, Long projectId) {
         if (repository.existsByNameAndIsDeleted(newModel.getName(),false)){
 
@@ -88,12 +95,14 @@ public class ModelServiceImpl implements ModelService {
     private Integer findCurrentPercentage(Model model) {
         ConfigType configType = model.getProject().getConfigType();
 
-        return switch (configType) {
+        Integer currentPercentage = switch (configType) {
             case WEEKLY -> model.getWeeklyPercentage();
             case MONTHLY -> model.getMonthlyPercentage();
             default -> model.getFixedPercentage();
         };
+        if (currentPercentage == null) return 0;
 
+        return currentPercentage;
     }
 
     private int calculateModelTotal(Model model,Integer percentage){
