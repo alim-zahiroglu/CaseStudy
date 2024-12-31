@@ -2,8 +2,8 @@ package com.uydev.controller;
 
 import com.uydev.dto.ModelDto;
 import com.uydev.dto.ResponseWrapper;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -11,4 +11,7 @@ import java.util.List;
 public interface ModelController {
     @GetMapping("/list")
     ResponseWrapper<List<ModelDto>> findAllModels();
+
+    @PostMapping("/add")
+    ResponseWrapper<ModelDto> addModel(@Valid @RequestBody ModelDto newModel, @RequestParam Long projectId);
 }

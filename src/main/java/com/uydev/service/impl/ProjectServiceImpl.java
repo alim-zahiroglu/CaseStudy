@@ -90,6 +90,20 @@ public class ProjectServiceImpl implements ProjectService {
         return response;
     }
 
+    @Override
+    public boolean isProjectExist(Long projectId) {
+       return repository.existsByIdAndIsDeleted(projectId,false);
+    }
+
+    @Override
+    public Project findById(Long projectId){
+        Project project =  repository.findByIdAndIsDeleted(projectId,false);
+        if (project == null){
+            throw new ProjectNotFoundException(projectId);
+        }
+        return project;
+    }
+
     private void createCurrentMothTarget(Project savedProject, int target){
         MonthlyTarget monthlyTarget = new MonthlyTarget();
         monthlyTarget.setProject(savedProject);
@@ -103,14 +117,6 @@ public class ProjectServiceImpl implements ProjectService {
     currentTarget.setTarget(newTarget);
     monthlyTargetService.save(mapper.convert(currentTarget,new MonthlyTarget()));
 
-    }
-
-    private Project findById(Long projectId){
-        Project project =  repository.findByIdAndIsDeleted(projectId,false);
-        if (project == null){
-            throw new ProjectNotFoundException(projectId);
-        }
-        return project;
     }
 
     private ProjectDto getProjectById(Long projectId){

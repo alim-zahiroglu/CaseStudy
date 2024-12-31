@@ -2,11 +2,27 @@ package com.uydev.repository;
 
 import com.uydev.entity.Model;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public interface ModelRepository extends JpaRepository<Model,Long> {
-    List<Model> findAllByProject_IsDeleted(boolean isDeleted);
+
+    List<Model> findAllByIsDeleted(boolean isDeleted);
+
+    @Query("SELECT m FROM Model m " +
+            "JOIN m.project p " +
+            "WHERE p.id = :projectId " +
+            "AND p.isDeleted = :isDeleted " +
+            "AND m.isDeleted = :modelIsDeleted")
+    List<Model> findAllByProjectIdAndIsDeleted(Long projectId, boolean isDeleted, boolean modelIsDeleted);
+
+    @Query("SELECT CASE WHEN COUNT(m) > 0 THEN true ELSE false END " +
+            "FROM Model m " +
+            "WHERE m.name = :modelName " +
+            "AND m.isDeleted = :isDeleted")
+    boolean existsByNameAndIsDeleted(String modelName, boolean isDeleted);
+
 }

@@ -18,4 +18,9 @@ public class ModelControllerImpl extends BaseResponseOk implements ModelControll
     public ResponseWrapper<List<ModelDto>> findAllModels() {
         return ok(modelService.findAllModels(), "All models are retrieved");
     }
+
+    @Override
+    public ResponseWrapper<ModelDto> addModel(ModelDto newModel, Long projectId) {
+        return ok(modelService.addModel(newModel,projectId));
+    }
 }

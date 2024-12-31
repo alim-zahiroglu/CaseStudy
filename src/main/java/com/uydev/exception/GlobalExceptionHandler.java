@@ -70,4 +70,9 @@ public class GlobalExceptionHandler extends BaseResponseError {
     public ResponseWrapper<Null> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex){
         return error(null,ex.getMessage());
     }
+    @ExceptionHandler(value = ValueNotAcceptableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseWrapper<Null> handleValueNotAcceptableException(ValueNotAcceptableException ex){
+        return error(null,ex.getMessage());
+    }
 }

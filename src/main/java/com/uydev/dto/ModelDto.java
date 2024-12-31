@@ -25,17 +25,22 @@ public class ModelDto {
     @Size(min = 2, max = 50, message = "Name must be 2~50 character long")
     private String name;
 
-
     private boolean isActive = true;
 
-    private Integer currentPercentage;
-    private Integer fixedPercentage;
-    private Integer monthlyPercentage;
-    private Integer weeklyPercentage;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private int modelTotal;
 
     @NumberFormat
-    @Min(value = 1, message = "Project Id should be positive integer number")
+    @Min(value = 0, message = "CurrentPercentage should be between 0 ~ 100")
+    private Integer currentPercentage = 0;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long projectId;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String projectName;
+
+    //    private Integer fixedPercentage;
+//    private Integer monthlyPercentage;
+//    private Integer weeklyPercentage;
 }

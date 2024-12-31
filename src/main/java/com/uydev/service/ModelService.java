@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface ModelService {
     List<ModelDto> findAllModels();
+
+    ModelDto addModel(ModelDto newModel, Long projectId);
+
+    Integer findAvailablePercentage(Long projectId);
 }

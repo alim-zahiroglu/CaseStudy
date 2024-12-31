@@ -38,7 +38,7 @@ public class ProjectDto {
     @Min(value = 1, message = "Target must be greater than or equal to 1")
     private int target;
 
-    private List<MonthlyTargetDto> monthlyTargets;
+//    private List<MonthlyTargetDto> monthlyTargets;
 
 
 

@@ -14,7 +14,7 @@ VALUES
 -- Base Data for Models (Phone Models with Percentages)
 INSERT INTO model (name, is_active, project_id, fixed_percentage, monthly_percentage, weekly_percentage, insert_date_time, insert_user_id, last_update_date_time, last_update_user_id, is_deleted)
 VALUES
-    ( 'Huawei P60', true, 1, 50, NULL, NULL, NOW(), 1, NOW(), 1, false),  -- Fixed config
+    ( 'Huawei P60', false, 1, 50, NULL, NULL, NOW(), 1, NOW(), 1, false),  -- Fixed config
     ( 'Huawei Mate 50', true, 2, NULL, 30, NULL, NOW(), 1, NOW(), 1, false), -- Monthly config
     ('Huawei Nova 11', true, 3, NULL, NULL, 20, NOW(), 1, NOW(), 1, false); -- Weekly config
 

@@ -1,5 +1,6 @@
 package com.uydev.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -15,6 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Model  extends BaseEntity {
 
+    @Column(unique = true)
     private String name;
 
     private boolean isActive;
