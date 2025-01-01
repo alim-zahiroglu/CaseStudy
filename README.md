@@ -39,5 +39,13 @@ This is a Java SpringBoot BackEnd application offering Rest APIs.
 ### Database ER Diagram
 
 ![Database ER Diagram](https://github.com/user-attachments/assets/dc9ff493-8019-4695-b0ba-9cc77ab16c78)
+### Swagger docs
+![01](https://github.com/user-attachments/assets/e441a3c1-44e8-40a6-963b-c93e62bf44c0)
+![02](https://github.com/user-attachments/assets/097d2952-ad6a-4aa5-a267-7d250a24e5c6)
+![03](https://github.com/user-attachments/assets/ee9e6b4c-7852-42e2-88e5-905421aaf767)
+
+
+
+
 
 
