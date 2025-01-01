@@ -1,6 +1,6 @@
 spring:
   application:
-    name: etlasBackend
+    name: caseStudy
 
   # database configuration
   datasource:
@@ -23,6 +23,11 @@ spring:
   sql:
     init:
       mode: always
+
+# swagger-ui configuration
+springdoc:
+  swagger-ui:
+    path: /show-swagger
 
 server:
   port: 8080
