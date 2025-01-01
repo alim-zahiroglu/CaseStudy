@@ -31,7 +31,7 @@ public class PartControllerImpl extends BaseResponseOk implements PartController
 
     @Override
     public ResponseWrapper<PartDto> updatePart(PartDto newPart, Long partId) {
-        return null;
+        return ok(partService.updatePart(newPart,partId),"Part is updated");
     }
 
     @Override

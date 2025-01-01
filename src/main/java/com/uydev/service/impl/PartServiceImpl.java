@@ -4,6 +4,7 @@ import com.uydev.dto.PartDto;
 import com.uydev.entity.Model;
 import com.uydev.entity.Part;
 import com.uydev.exception.DuplicateKeyException;
+import com.uydev.exception.PartNotFoundException;
 import com.uydev.mapper.MapperUtil;
 import com.uydev.repository.PartRepository;
 import com.uydev.service.ModelService;
@@ -61,6 +62,33 @@ public class PartServiceImpl implements PartService {
         part.setModel(model);
         Part savedPart = repository.save(part);
         return prepareResponse(savedPart);
+    }
+
+    @Override
+    public PartDto updatePart(PartDto newPart, Long partId) {
+        Part part = findById(partId);
+        checkPartUpdatable(newPart.getName(),part.getModel().getId(),partId);
+
+        Part updatedPart = mapper.convert(newPart, part);
+        updatedPart.setId(partId);
+        updatedPart.setModel(part.getModel());
+        Part savedPart = repository.save(updatedPart);
+        return prepareResponse(savedPart);
+    }
+
+    private void checkPartUpdatable(String name, Long modelId, Long partId) {
+        Part part = repository.findByNameAndModelIdAndIdNotAndIsDeleted(name, modelId,partId,false);
+        if (part != null) {
+            throw new DuplicateKeyException("Part with name: '" + name + "' already exists in model id: " + modelId);
+        }
+    }
+
+    private Part findById(Long partId) {
+        Part part =  repository.findByIdAndIsDeleted(partId,false);
+        if (part == null) {
+            throw new PartNotFoundException("Part with id: " + partId + " not found");
+        }
+        return part;
     }
 
     private void checkPartExists(String name, Long modelId) {

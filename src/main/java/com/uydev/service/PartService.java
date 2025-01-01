@@ -10,4 +10,6 @@ public interface PartService {
     List<PartDto> findAllPartsByModelId(Long modelId);
 
     PartDto addPart(PartDto newPart, Long modelId);
+
+    PartDto updatePart(PartDto newPart, Long partId);
 }
