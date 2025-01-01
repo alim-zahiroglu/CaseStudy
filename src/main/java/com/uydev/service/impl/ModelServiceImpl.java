@@ -5,6 +5,7 @@ import com.uydev.entity.Model;
 import com.uydev.entity.Part;
 import com.uydev.entity.Project;
 import com.uydev.enums.ConfigType;
+import com.uydev.enums.Month;
 import com.uydev.exception.DuplicateKeyException;
 import com.uydev.exception.ModelNotFoundException;
 import com.uydev.exception.ValueNotAcceptableException;
@@ -40,13 +41,14 @@ public class ModelServiceImpl implements ModelService {
     public List<ModelDto> findAllModels() {
         List<Model> models = repository.findAllByIsDeleted(false);
         return models.stream()
-                .map(model -> {
-                    ModelDto modelDto = mapper.convert(model, new ModelDto());
-                    modelDto.setCurrentPercentage(findCurrentPercentage(model));
-                    modelDto.setModelTotal(calculateModelTotal(model,modelDto.getCurrentPercentage()));
-                    return modelDto;
-                })
-                .toList();
+        .map(model -> {
+        ModelDto modelDto = mapper.convert(model, new ModelDto());
+        modelDto.setCurrentPercentage(findCurrentPercentage(model));
+        modelDto.setModelTotal(calculateModelTotal(model, modelDto.getCurrentPercentage()));
+        return modelDto;
+    })
+    .sorted((m1, m2) -> m2.getCurrentPercentage().compareTo(m1.getCurrentPercentage()))
+    .toList();
     }
 
     @Override
@@ -54,7 +56,32 @@ public class ModelServiceImpl implements ModelService {
         Project project = projectService.findById(projectId);
         return findAllModels().stream()
                 .filter(model-> Objects.equals(model.getProjectId(), project.getId()))
+                .sorted((m1, m2) -> m2.getCurrentPercentage().compareTo(m1.getCurrentPercentage()))
                 .toList();
+    }
+
+    @Override
+    public List<ModelDto> findAllModelsByProjectIdAndMoth(Long projectId, String month) {
+        List<Model> models = repository.findAllByIsDeleted(false);
+        return models.stream()
+                .filter(model -> model.getProject().getId().equals(projectId))
+                .map(model -> {
+                    ModelDto modelDto = mapper.convert(model, new ModelDto());
+                    Integer monthTarget = findMonthlyTargetByProjectIdAndMonth(projectId, month);
+                    modelDto.setCurrentPercentage(findCurrentPercentage(model));
+                    modelDto.setModelTotal((monthTarget * modelDto.getCurrentPercentage())/100);
+                    return modelDto;
+                })
+                .sorted((m1, m2) -> m2.getCurrentPercentage().compareTo(m1.getCurrentPercentage()))
+                .toList();
+    }
+
+
+
+
+    private Integer findMonthlyTargetByProjectIdAndMonth(Long projectId, String month) {
+        Month monthEnum = Month.valueOf(month.toUpperCase());
+        return monthlyTargetService.findMonthlyTargetByProjectIdAndMonth(projectId, monthEnum).getTarget();
     }
 
     @Override

@@ -26,20 +26,23 @@ public class MonthlyTargetServiceImpl implements MonthlyTargetService {
     }
 
     @Override
-    public MonthlyTargetDto getCurrentMonthlyTargetByProjectId(Long projectId) {
-        Month currentMonth = Month.valueOf(LocalDate.now().getMonth().name());
-        MonthlyTarget currentMonthTarget = repository.getMonthlyTargetByProjectIdAndMonth(projectId,currentMonth);
-        if (currentMonthTarget == null){
-          MonthlyTarget target = new MonthlyTarget();
-          target.setTarget(0);
-          target.setMonth(currentMonth);
-          target.setProject(projectService.findById(projectId));
-          repository.save(target);
-          return mapper.convert(target, new MonthlyTargetDto());
-        }
-        return mapper.convert(currentMonthTarget, new MonthlyTargetDto());
+public MonthlyTargetDto getCurrentMonthlyTargetByProjectId(Long projectId) {
+    return findMonthlyTargetByProjectIdAndMonth(projectId, Month.valueOf(LocalDate.now().getMonth().name()));
+}
 
+@Override
+public MonthlyTargetDto findMonthlyTargetByProjectIdAndMonth(Long projectId, Month month) {
+    MonthlyTarget monthTarget = repository.getMonthlyTargetByProjectIdAndMonth(projectId, month);
+    if (monthTarget == null) {
+        MonthlyTarget target = new MonthlyTarget();
+        target.setTarget(0);
+        target.setMonth(month);
+        target.setProject(projectService.findById(projectId));
+        repository.save(target);
+        return mapper.convert(target, new MonthlyTargetDto());
     }
+    return mapper.convert(monthTarget, new MonthlyTargetDto());
+}
 
     @Override
     public void save(MonthlyTarget monthlyTarget) {

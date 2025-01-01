@@ -10,8 +10,6 @@ import com.uydev.repository.PartRepository;
 import com.uydev.service.ModelService;
 import com.uydev.service.MonthlyTargetService;
 import com.uydev.service.PartService;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

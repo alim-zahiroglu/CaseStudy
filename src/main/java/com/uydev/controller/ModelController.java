@@ -15,6 +15,9 @@ public interface ModelController {
     @GetMapping("/list/{projectId}")
     ResponseWrapper<List<ModelDto>> listModelByProjectId(@PathVariable Long projectId);
 
+    @GetMapping("/list/{projectId}/{month}")
+    ResponseWrapper<List<ModelDto>> listModelByProjectIdAndMonth(@PathVariable Long projectId, @PathVariable String month);
+
     @PostMapping("/add/{projectId}")
     ResponseWrapper<ModelDto> addModel(@Valid @RequestBody ModelDto newModel, @PathVariable Long projectId);
 
