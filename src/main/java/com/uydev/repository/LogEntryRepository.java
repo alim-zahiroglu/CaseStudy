@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface LogEntryRepository extends JpaRepository<LogEntity, Long> {
     List<LogEntity> findAllByEntity(String entity);
+
+    List<LogEntity> findAllByEntityAndOperationStatus(String model, boolean success);
 }

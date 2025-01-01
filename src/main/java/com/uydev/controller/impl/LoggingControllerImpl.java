@@ -25,4 +25,13 @@ public class LoggingControllerImpl extends BaseResponseOk implements LoggingCont
         return ok(logService.findAllLogsInModelService());
     }
 
+    @Override
+    public ResponseWrapper<List<LogEntity>> findAllSuccessLogsInModelController() {
+        return ok(logService.findAllSuccessLogsInModelService());
+    }
+
+    @Override
+    public ResponseWrapper<List<LogEntity>> findAllSuccessLogsInPartController() {
+        return ok(logService.findAllSuccessLogsInPartService());
+    }
 }
