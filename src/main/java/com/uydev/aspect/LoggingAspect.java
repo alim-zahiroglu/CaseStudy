@@ -66,7 +66,7 @@ public class LoggingAspect {
 
 
         logService.log(String.format("Completed operation: %s with parameters: %s, Result: %s",
-                operation, Arrays.toString(args), result), entity, entityId);
+                operation, Arrays.toString(args), result), entity, entityId, true);
 
     }
 
