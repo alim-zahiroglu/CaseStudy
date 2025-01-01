@@ -1,6 +1,6 @@
 package com.uydev.dto;
 
-import com.uydev.enums.Month;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +12,10 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MonthlyTargetDTO {
+public class MonthlyTargetDto {
 
     private Long id;
     private String month = LocalDate.now().getMonth().toString();
     private int target = 1000;
-
     private Long projectId;
 }

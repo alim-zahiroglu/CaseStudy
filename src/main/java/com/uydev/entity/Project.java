@@ -18,11 +18,13 @@ import java.util.List;
 @Table(name = "projects")
 public class Project extends BaseEntity{
 
+    @Column(unique = true)
     private String name;
+
     @Enumerated(EnumType.STRING)
     private ConfigType configType;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "project")
     private List<MonthlyTarget> monthlyTargets = new ArrayList<>();
 
 

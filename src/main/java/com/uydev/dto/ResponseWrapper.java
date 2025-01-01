@@ -24,6 +24,10 @@ public class ResponseWrapper<T> {
                 .build();
     }
 
+    public static <T> ResponseWrapper<T> ok(T data) {
+        return ok(data, "Operation is success");
+    }
+
     // for error response
     public static <T> ResponseWrapper<T> error(T data, String error){
         return ResponseWrapper.<T>builder()
@@ -32,5 +36,9 @@ public class ResponseWrapper<T> {
                 .message(error)
                 .data(data)
                 .build();
+    }
+
+    public static <T> ResponseWrapper<T> error(T data) {
+        return error(data, "Something went wrong");
     }
 }
