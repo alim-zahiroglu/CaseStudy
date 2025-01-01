@@ -48,11 +48,8 @@ public class LoggingAspect {
 
 
 
-
-
-
     private void logBefore(JoinPoint joinPoint,String entity){
-        String operation = getPartOperationName(joinPoint);
+        String operation = entity.equals("Model") ? getModelOperationName(joinPoint) : getPartOperationName(joinPoint);
         Long entityId = getEntityId(joinPoint);
         Object[] args = joinPoint.getArgs();
 
@@ -63,7 +60,7 @@ public class LoggingAspect {
 
 
     private void logAfter(JoinPoint joinPoint, String entity, Object result){
-        String operation = getModelOperationName(joinPoint);
+        String operation = entity.equals("Model") ? getModelOperationName(joinPoint) : getPartOperationName(joinPoint);
         Long entityId = getEntityId(joinPoint);
         Object[] args = joinPoint.getArgs();
 
