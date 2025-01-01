@@ -10,6 +10,7 @@ import com.uydev.exception.DuplicateKeyException;
 import com.uydev.exception.ProjectNotFoundException;
 import com.uydev.mapper.MapperUtil;
 import com.uydev.repository.ProjectRepository;
+import com.uydev.service.ModelService;
 import com.uydev.service.MonthlyTargetService;
 import com.uydev.service.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
     private final MonthlyTargetService monthlyTargetService;
+    private final ModelService modelService;
     private final ProjectRepository repository;
     private final MapperUtil mapper;
     @Override
@@ -81,6 +83,10 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = findById(projectId);
         project.setIsDeleted(true);
         Project deletedProject = repository.save(project);
+
+        // delete models belongs to project
+        modelService.deleteModelByProjectId(projectId);
+
         ProjectDto response = mapper.convert(deletedProject,new ProjectDto());
         MonthlyTargetDto currentMonthTarget = monthlyTargetService.getCurrentMonthlyTargetByProjectId(projectId);
         if (currentMonthTarget != null){
@@ -88,6 +94,20 @@ public class ProjectServiceImpl implements ProjectService {
             return response;
         }
         return response;
+    }
+
+    @Override
+    public boolean isProjectExist(Long projectId) {
+       return repository.existsByIdAndIsDeleted(projectId,false);
+    }
+
+    @Override
+    public Project findById(Long projectId){
+        Project project =  repository.findByIdAndIsDeleted(projectId,false);
+        if (project == null){
+            throw new ProjectNotFoundException(projectId);
+        }
+        return project;
     }
 
     private void createCurrentMothTarget(Project savedProject, int target){
@@ -103,14 +123,6 @@ public class ProjectServiceImpl implements ProjectService {
     currentTarget.setTarget(newTarget);
     monthlyTargetService.save(mapper.convert(currentTarget,new MonthlyTarget()));
 
-    }
-
-    private Project findById(Long projectId){
-        Project project =  repository.findByIdAndIsDeleted(projectId,false);
-        if (project == null){
-            throw new ProjectNotFoundException(projectId);
-        }
-        return project;
     }
 
     private ProjectDto getProjectById(Long projectId){

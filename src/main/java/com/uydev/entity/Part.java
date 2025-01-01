@@ -7,16 +7,18 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "parts")
 public class Part extends BaseEntity{
 
     private String name;
-    private int quantity; // Quantity of this part in a model
+    private int quantityPerModel; // Quantity of this part in a model
 
     @ManyToOne
     @JoinColumn(name = "model_id", nullable = false)
