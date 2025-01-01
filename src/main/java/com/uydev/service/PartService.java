@@ -8,4 +8,6 @@ public interface PartService {
     List<PartDto> findAllParts();
 
     List<PartDto> findAllPartsByModelId(Long modelId);
+
+    PartDto addPart(PartDto newPart, Long modelId);
 }

@@ -25,8 +25,8 @@ public class PartControllerImpl extends BaseResponseOk implements PartController
     }
 
     @Override
-    public ResponseWrapper<PartDto> addPart(PartDto newPart) {
-        return null;
+    public ResponseWrapper<PartDto> addPart(PartDto newPart, Long modelId) {
+        return ok(partService.addPart(newPart,modelId),"Part is added to model id: "+modelId);
     }
 
     @Override

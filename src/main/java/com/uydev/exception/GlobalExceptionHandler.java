@@ -4,6 +4,8 @@ import com.uydev.controller.BaseResponseError;
 import com.uydev.dto.ResponseWrapper;
 import jakarta.validation.constraints.Null;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -80,5 +82,10 @@ public class GlobalExceptionHandler extends BaseResponseError {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseWrapper<Null> handleValueNotAcceptableException(ValueNotAcceptableException ex){
         return error(null,ex.getMessage());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseWrapper<Null> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        return error(null, "You should provide a valid request body or valid parameters");
     }
 }

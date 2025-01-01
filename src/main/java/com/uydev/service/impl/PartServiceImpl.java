@@ -3,11 +3,14 @@ package com.uydev.service.impl;
 import com.uydev.dto.PartDto;
 import com.uydev.entity.Model;
 import com.uydev.entity.Part;
+import com.uydev.exception.DuplicateKeyException;
 import com.uydev.mapper.MapperUtil;
 import com.uydev.repository.PartRepository;
 import com.uydev.service.ModelService;
 import com.uydev.service.MonthlyTargetService;
 import com.uydev.service.PartService;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +51,30 @@ public class PartServiceImpl implements PartService {
                     return partDto;
                 })
                 .toList();
+    }
+
+    @Override
+    public PartDto addPart(PartDto newPart, Long modelId) {
+        Model model = modelService.findById(modelId);
+        checkPartExists(newPart.getName(),modelId);
+        Part part = mapper.convert(newPart, new Part());
+        part.setModel(model);
+        Part savedPart = repository.save(part);
+        return prepareResponse(savedPart);
+    }
+
+    private void checkPartExists(String name, Long modelId) {
+        repository.findByNameAndModelIdAndIsDeleted(name, modelId,false)
+                .ifPresent(part -> {
+                    throw new DuplicateKeyException("Part with name: '" + name + "' already exists in model id: " + modelId);
+                });
+    }
+
+    private PartDto prepareResponse(Part savedPart) {
+        PartDto partDto = mapper.convert(savedPart, new PartDto());
+        int totalQuantity = calculateQuantityInTotal(savedPart);
+        partDto.setQuantityInTotal(totalQuantity);
+        return partDto;
     }
 
     private List<Part> getAllParts() {

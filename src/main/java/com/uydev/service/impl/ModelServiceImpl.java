@@ -119,6 +119,15 @@ public class ModelServiceImpl implements ModelService {
 
     }
 
+    @Override
+    public Model findById(Long modelId) {
+        Model model = repository.findById(modelId).orElseThrow(()-> new ModelNotFoundException("Model Not found with id: '" + modelId + "'"));
+        if (model.getIsDeleted()){
+            throw new ModelNotFoundException("Model Not found with id: '" + modelId + "'");
+        }
+        return model;
+    }
+
     private void checkUpdatedNameIsUnique(String modelName, Long projectId, Long modelId){
         if (repository.existsByNameAndProjectIdAndIdNotAndIsDeleted(modelName,projectId,modelId,false)){
             throw new DuplicateKeyException("Model with name: '" + modelName + "' is already exist");
@@ -148,13 +157,6 @@ public class ModelServiceImpl implements ModelService {
         return response;
     }
 
-    private Model findById(Long modelId) {
-        Model model = repository.findById(modelId).orElseThrow(()-> new ModelNotFoundException("Model Not found with id: '" + modelId + "'"));
-        if (model.getIsDeleted()){
-            throw new ModelNotFoundException("Model Not found with id: '" + modelId + "'");
-        }
-        return model;
-    }
 
     private void checkModelExists(String modelName, Long projectId){
         if (repository.existsByNameAndProjectIdAndIsDeleted(modelName,projectId, false)){

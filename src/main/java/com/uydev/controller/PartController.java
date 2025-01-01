@@ -16,8 +16,8 @@ public interface PartController {
     @GetMapping("/list/{modelId}")
     ResponseWrapper<List<PartDto>> findAllPartsByModelId(@PathVariable Long modelId);
 
-    @PostMapping("/add")
-    ResponseWrapper<PartDto> addPart(@Valid @RequestBody PartDto newPart);
+    @PostMapping("/add/{modelId}")
+    ResponseWrapper<PartDto> addPart(@Valid @RequestBody PartDto newPart, @PathVariable Long modelId);
 
     @PutMapping("/update/{partId}")
     ResponseWrapper<PartDto> updatePart(@Valid @RequestBody PartDto newPart, @PathVariable Long partId);

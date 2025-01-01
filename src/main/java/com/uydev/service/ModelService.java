@@ -23,4 +23,6 @@ public interface ModelService {
     Integer findCurrentPercentage(Model model);
 
     int calculateModelTotal(Model model,Integer percentage);
+
+    Model findById(Long modelId);
 }
