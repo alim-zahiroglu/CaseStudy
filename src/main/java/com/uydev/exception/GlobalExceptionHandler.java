@@ -88,4 +88,10 @@ public class GlobalExceptionHandler extends BaseResponseError {
     public ResponseWrapper<Null> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         return error(null, "You should provide a valid request body or valid parameters");
     }
+
+    @ExceptionHandler(value = RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseWrapper<Null> handleException(RuntimeException ex){
+        return error(null,"An error occurred while processing the request");
+    }
 }
