@@ -12,6 +12,7 @@ import com.uydev.mapper.MapperUtil;
 import com.uydev.repository.ModelRepository;
 import com.uydev.service.ModelService;
 import com.uydev.service.MonthlyTargetService;
+import com.uydev.service.PartService;
 import com.uydev.service.ProjectService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,14 @@ public class ModelServiceImpl implements ModelService {
     private final ModelRepository repository;
     private final ProjectService projectService;
     private final MonthlyTargetService monthlyTargetService;
+    private final PartService partService;
     private final MapperUtil mapper;
 
-    public ModelServiceImpl(ModelRepository repository, @Lazy ProjectService projectService, MonthlyTargetService monthlyTargetService, MapperUtil mapper) {
+    public ModelServiceImpl(ModelRepository repository, @Lazy ProjectService projectService, MonthlyTargetService monthlyTargetService, @Lazy PartService partService, MapperUtil mapper) {
         this.repository = repository;
         this.projectService = projectService;
         this.monthlyTargetService = monthlyTargetService;
+        this.partService = partService;
         this.mapper = mapper;
     }
 
@@ -114,6 +117,7 @@ public class ModelServiceImpl implements ModelService {
         Model model = findById(modelId);
         model.setIsDeleted(true);
         repository.save(model);
+        partService.deletePartByModelId(modelId);
         Integer percentage = findCurrentPercentage(model);
         return preparedResponse(model,percentage);
 

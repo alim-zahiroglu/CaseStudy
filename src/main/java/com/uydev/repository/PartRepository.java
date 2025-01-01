@@ -22,4 +22,6 @@ public interface PartRepository extends JpaRepository<Part,Long> {
             "AND p.id != :partId " +
             "AND p.isDeleted = :isDeleted")
     Part findByNameAndModelIdAndIdNotAndIsDeleted(String name, Long modelId, Long partId, boolean isDeleted);
+
+    List<Part> findAllByModelIdAndIsDeleted(Long modelId, boolean isDeleted);
 }

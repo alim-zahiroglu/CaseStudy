@@ -76,6 +76,23 @@ public class PartServiceImpl implements PartService {
         return prepareResponse(savedPart);
     }
 
+    @Override
+    public PartDto deletePart(Long partId) {
+        Part part = findById(partId);
+        part.setIsDeleted(true);
+        Part savedPart = repository.save(part);
+        return prepareResponse(savedPart);
+    }
+
+    @Override
+    public void deletePartByModelId(Long modelId) {
+        List<Part> parts = repository.findAllByModelIdAndIsDeleted(modelId,false);
+        parts.forEach(part -> {
+            part.setIsDeleted(true);
+            repository.save(part);
+        });
+    }
+
     private void checkPartUpdatable(String name, Long modelId, Long partId) {
         Part part = repository.findByNameAndModelIdAndIdNotAndIsDeleted(name, modelId,partId,false);
         if (part != null) {

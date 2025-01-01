@@ -12,4 +12,8 @@ public interface PartService {
     PartDto addPart(PartDto newPart, Long modelId);
 
     PartDto updatePart(PartDto newPart, Long partId);
+
+    PartDto deletePart(Long partId);
+
+    void deletePartByModelId(Long modelId);
 }

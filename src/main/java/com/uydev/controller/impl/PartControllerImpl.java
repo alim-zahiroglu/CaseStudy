@@ -36,6 +36,6 @@ public class PartControllerImpl extends BaseResponseOk implements PartController
 
     @Override
     public ResponseWrapper<PartDto> deletePart(Long partId) {
-        return null;
+        return ok(partService.deletePart(partId),"Part is deleted");
     }
 }
