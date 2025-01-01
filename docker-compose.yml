@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # PostgreSQL service
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: case_study
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+
+  # Spring Boot application service
+  app:
+    image: alimzahiroglu/case-study:latest
+    container_name: caseStudy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      - db
+    networks:
+      - app-network
+    ports:
+      - "8080:8080"
+    restart: always
+
+# Define network to ensure both services can communicate
+networks:
+  app-network:
+    driver: bridge
+
+# Define volumes to persist database data
+volumes:
+  postgres-data:
+    driver: local
