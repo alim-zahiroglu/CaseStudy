@@ -2,10 +2,7 @@ package com.uydev.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +30,7 @@ public class ModelDto {
 
     @NumberFormat
     @Min(value = 0, message = "CurrentPercentage should be between 0 ~ 100")
+    @Max(value = 100, message = "CurrentPercentage should be between 0 ~ 100")
     private Integer currentPercentage = 0;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

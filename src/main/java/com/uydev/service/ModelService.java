@@ -1,6 +1,7 @@
 package com.uydev.service;
 
 import com.uydev.dto.ModelDto;
+import com.uydev.entity.Model;
 
 import java.util.List;
 
@@ -18,4 +19,8 @@ public interface ModelService {
     ModelDto updateModel(ModelDto newModel, Long modelId);
 
     ModelDto deleteModel(Long modelId);
+
+    Integer findCurrentPercentage(Model model);
+
+    int calculateModelTotal(Model model,Integer percentage);
 }

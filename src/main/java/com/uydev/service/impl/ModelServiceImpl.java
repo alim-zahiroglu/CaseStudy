@@ -2,6 +2,7 @@ package com.uydev.service.impl;
 
 import com.uydev.dto.ModelDto;
 import com.uydev.entity.Model;
+import com.uydev.entity.Part;
 import com.uydev.entity.Project;
 import com.uydev.enums.ConfigType;
 import com.uydev.exception.DuplicateKeyException;
@@ -196,7 +197,7 @@ public class ModelServiceImpl implements ModelService {
     }
 
 
-    private Integer findCurrentPercentage(Model model) {
+    public Integer findCurrentPercentage(Model model) {
         ConfigType configType = model.getProject().getConfigType();
 
         Integer currentPercentage = switch (configType) {
@@ -209,7 +210,7 @@ public class ModelServiceImpl implements ModelService {
         return currentPercentage;
     }
 
-    private int calculateModelTotal(Model model,Integer percentage){
+    public int calculateModelTotal(Model model,Integer percentage){
         int target = monthlyTargetService.getCurrentMonthlyTargetByProjectId(model.getProject().getId()).getTarget();
         return (target*percentage)/100;
         }

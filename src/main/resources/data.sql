@@ -19,11 +19,11 @@ VALUES
     ('Huawei Nova 11', true, 3, NULL, NULL, 20, NOW(), 1, NOW(), 1, false); -- Weekly config
 
 -- Base Data for Parts (Components for Phones or Cars)
-INSERT INTO parts (name, quantity, model_id, insert_date_time, insert_user_id, last_update_date_time, last_update_user_id, is_deleted)
+INSERT INTO parts (name, quantity_per_model, model_id, insert_date_time, insert_user_id, last_update_date_time, last_update_user_id, is_deleted)
 VALUES
-    ('Kirin 9000 Chipset', 1, 1, NOW(), 1, NOW(), 1, false),
-    ('OLED Display', 1, 2, NOW(), 1, NOW(), 1, false),
-    ('Triple Camera Setup', 1, 3, NOW(), 1, NOW(), 1, false);
+    ('Kirin 9000 Chipset', 2, 1, NOW(), 1, NOW(), 1, false),
+    ('OLED Display', 5, 2, NOW(), 1, NOW(), 1, false),
+    ('Triple Camera Setup', 10, 3, NOW(), 1, NOW(), 1, false);
 
 -- Base Data for Monthly Targets (Production Goals)
 INSERT INTO monthly_target (month, target, project_id, insert_date_time, insert_user_id, last_update_date_time, last_update_user_id, is_deleted)
@@ -37,7 +37,7 @@ VALUES
     ( 'FEBRUARY', 7500, 2, NOW(), 1, NOW(), 1, false),
     ( 'MARCH', 8000, 2, NOW(), 1, NOW(), 1, false),
 
---     ( 'DECEMBER', 3500, 3, NOW(), 1, NOW(), 1, false),
+    ( 'DECEMBER', 3500, 3, NOW(), 1, NOW(), 1, false),
     ( 'JANUARY', 4500, 3, NOW(), 1, NOW(), 1, false),
     ( 'FEBRUARY', 6000, 3, NOW(), 1, NOW(), 1, false),
     ( 'MARCH', 8000, 3, NOW(), 1, NOW(), 1, false);

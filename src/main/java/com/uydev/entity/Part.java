@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Part extends BaseEntity{
 
     private String name;
-    private int quantity; // Quantity of this part in a model
+    private int quantityPerModel; // Quantity of this part in a model
 
     @ManyToOne
     @JoinColumn(name = "model_id", nullable = false)
