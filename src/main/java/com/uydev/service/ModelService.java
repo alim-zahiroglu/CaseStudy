@@ -25,4 +25,6 @@ public interface ModelService {
     int calculateModelTotal(Model model,Integer percentage);
 
     Model findById(Long modelId);
+
+    List<ModelDto> findAllModelsByProjectIdAndMoth(Long projectId, String month);
 }
