@@ -16,7 +16,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Model  extends BaseEntity {
 
-    @Column(unique = true)
     private String name;
 
     private boolean isActive;

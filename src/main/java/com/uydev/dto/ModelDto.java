@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class ModelDto {
     @Size(min = 2, max = 50, message = "Name must be 2~50 character long")
     private String name;
 
-    private boolean isActive = true;
+    private boolean isActive;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int modelTotal;

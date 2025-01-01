@@ -28,4 +28,9 @@ public class ModelControllerImpl extends BaseResponseOk implements ModelControll
     public ResponseWrapper<ModelDto> addModel(ModelDto newModel, Long projectId) {
         return ok(modelService.addModel(newModel,projectId));
     }
+
+    @Override
+    public ResponseWrapper<ModelDto> updateModel(ModelDto newModel, Long modelId) {
+        return ok(modelService.updateModel(newModel, modelId));
+    }
 }

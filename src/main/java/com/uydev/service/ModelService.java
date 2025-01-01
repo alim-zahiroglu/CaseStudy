@@ -14,4 +14,6 @@ public interface ModelService {
     List<ModelDto> findAllModelsByProjectId(Long projectId);
 
     void deleteModelByProjectId(Long projectId);
+
+    ModelDto updateModel(ModelDto newModel, Long modelId);
 }

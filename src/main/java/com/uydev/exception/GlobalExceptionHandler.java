@@ -59,6 +59,12 @@ public class GlobalExceptionHandler extends BaseResponseError {
         return error(null,ex.getMessage());
     }
 
+    @ExceptionHandler(value = ModelNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseWrapper<Null> handleModelNotFoundException(ModelNotFoundException ex){
+        return error(null,ex.getMessage());
+    }
+
     @ExceptionHandler(value = MonthlyTargetNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseWrapper<Null> handleMonthlyTargetNotFoundException(MonthlyTargetNotFoundException ex){

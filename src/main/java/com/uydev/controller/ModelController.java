@@ -15,6 +15,10 @@ public interface ModelController {
     @GetMapping("/list/{projectId}")
     ResponseWrapper<List<ModelDto>> listModelByProjectId(@PathVariable Long projectId);
 
-    @PostMapping("/add")
-    ResponseWrapper<ModelDto> addModel(@Valid @RequestBody ModelDto newModel, @RequestParam Long projectId);
+    @PostMapping("/add/{projectId}")
+    ResponseWrapper<ModelDto> addModel(@Valid @RequestBody ModelDto newModel, @PathVariable Long projectId);
+
+
+    @PutMapping("/update/{modelId}")
+    ResponseWrapper<ModelDto> updateModel(@Valid @RequestBody ModelDto newModel, @PathVariable Long modelId);
 }
