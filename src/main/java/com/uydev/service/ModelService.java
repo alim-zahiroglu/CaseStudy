@@ -16,4 +16,6 @@ public interface ModelService {
     void deleteModelByProjectId(Long projectId);
 
     ModelDto updateModel(ModelDto newModel, Long modelId);
+
+    ModelDto deleteModel(Long modelId);
 }

@@ -21,4 +21,7 @@ public interface ModelController {
 
     @PutMapping("/update/{modelId}")
     ResponseWrapper<ModelDto> updateModel(@Valid @RequestBody ModelDto newModel, @PathVariable Long modelId);
+
+    @DeleteMapping("/delete/{modelId}")
+    ResponseWrapper<ModelDto> deleteModel(@PathVariable Long modelId);
 }

@@ -16,7 +16,7 @@ public class ModelControllerImpl extends BaseResponseOk implements ModelControll
     private final ModelService modelService;
     @Override
     public ResponseWrapper<List<ModelDto>> findAllModels() {
-        return ok(modelService.findAllModels(), "All models are retrieved");
+        return ok(modelService.findAllModels());
     }
 
     @Override
@@ -26,11 +26,16 @@ public class ModelControllerImpl extends BaseResponseOk implements ModelControll
 
     @Override
     public ResponseWrapper<ModelDto> addModel(ModelDto newModel, Long projectId) {
-        return ok(modelService.addModel(newModel,projectId));
+        return ok(modelService.addModel(newModel,projectId), "Model added successfully");
     }
 
     @Override
     public ResponseWrapper<ModelDto> updateModel(ModelDto newModel, Long modelId) {
-        return ok(modelService.updateModel(newModel, modelId));
+        return ok(modelService.updateModel(newModel, modelId), "Model updated successfully");
+    }
+
+    @Override
+    public ResponseWrapper<ModelDto> deleteModel(Long modelId) {
+        return ok(modelService.deleteModel(modelId));
     }
 }

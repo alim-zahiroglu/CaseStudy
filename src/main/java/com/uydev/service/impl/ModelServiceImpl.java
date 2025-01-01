@@ -108,6 +108,16 @@ public class ModelServiceImpl implements ModelService {
         return updateModel(model,oldModel.getProject(),modelId,newModel.getCurrentPercentage());
     }
 
+    @Override
+    public ModelDto deleteModel(Long modelId) {
+        Model model = findById(modelId);
+        model.setIsDeleted(true);
+        repository.save(model);
+        Integer percentage = findCurrentPercentage(model);
+        return preparedResponse(model,percentage);
+
+    }
+
     private void checkUpdatedNameIsUnique(String modelName, Long projectId, Long modelId){
         if (repository.existsByNameAndProjectIdAndIdNotAndIsDeleted(modelName,projectId,modelId,false)){
             throw new DuplicateKeyException("Model with name: '" + modelName + "' is already exist");
